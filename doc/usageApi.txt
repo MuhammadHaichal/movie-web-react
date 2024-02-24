@@ -1,0 +1,16 @@
+url detail movie
+===============
+
+url = https://api.themoviedb.org/3/movie/343611?api_key=API_KEY
+
+Ini akan mengembalikan semua detail film utama sebagaimana diuraikan dalam dokumentasi detail film. Saya juga menyarankan untuk membaca dokumen lampiran ke respons karena ini menguraikan bagaimana Anda dapat membuat beberapa sub permintaan dalam satu.
+sumber : https://developer.themoviedb.org/docs/search-and-query-for-details
+
+
+url search movie
+================
+
+url = https://api.themoviedb.org/3/search/movie?query=nameMovie&include_adult=false&language=en-US&page=1
+
+Pencarian berbasis teks adalah cara yang paling umum. Anda memberikan string kueri dan kami memberikan kecocokan terdekat. Pencarian berdasarkan teks memperhitungkan semua nama dan judul asli, terjemahan, alternatif.
+sumber : https://developer.themoviedb.org/reference/search-movie
