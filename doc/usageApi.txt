@@ -1,7 +1,7 @@
 url detail movie
 ===============
 
-url = https://api.themoviedb.org/3/movie/343611?api_key=API_KEY
+url = https://api.themoviedb.org/3/movie/343611?language=en-US
 
 Ini akan mengembalikan semua detail film utama sebagaimana diuraikan dalam dokumentasi detail film. Saya juga menyarankan untuk membaca dokumen lampiran ke respons karena ini menguraikan bagaimana Anda dapat membuat beberapa sub permintaan dalam satu.
 sumber : https://developer.themoviedb.org/docs/search-and-query-for-details
