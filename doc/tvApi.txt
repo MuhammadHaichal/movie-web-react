@@ -1,0 +1,29 @@
+BASE URL TV LIST
+================
+
+ada kategori =
+- Top Rated
+- Popular
+
+# Popular
+Get a list of TV shows ordered by popularity.
+
+base url = https://api.themoviedb.org/3/tv/popular?language=en-US&page=1
+
+# Top Rated
+Get a list of TV shows ordered by rating.
+
+base url = https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1
+
+
+
+
+
+
+
+DETAIL TV LIST
+==============
+
+Get the details of a TV show.
+
+base url = https://api.themoviedb.org/3/tv/series_id?language=en-US

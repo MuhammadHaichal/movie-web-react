@@ -1,0 +1,52 @@
+BASE URL TRENDING
+=================
+
+# Url Trending all ( include Movies, people, and TV )
+======================
+
+base url = https://api.themoviedb.org/3/trending/all/{time_window}
+
+time_window =
+- day
+- week
+
+# url Trending Movies
+======================
+
+base url = https://api.themoviedb.org/3/trending/movie/{time_window}
+
+
+
+# url Trending people
+======================
+
+base url = https://api.themoviedb.org/3/trending/person/{time_window}
+
+
+# url Trending tv
+======================
+
+base url = https://api.themoviedb.org/3/trending/tv/{time_window}
+
+
+
+####### NOTES  #########
+
+nanti setiap movie akan di looping sesuai dengan api dari server atau limit
+dan nanti akan dibuat dropdown gitu, nanti state defaultnya atau valuenya adalah (All) ,
+dan ketika button di click akan ubah statenya atau valunya dan me-requests ulang api nya, tetapi
+bedasarkan movie, people atau tv yang sedang trending.
+
+example :
+
+### before user clicked button category
+
+base url = https://api.themoviedb.org/3/trending/all/{time_window}
+
+### after user clicked button category bedasarkan yang dimau
+
+base url = https://api.themoviedb.org/3/trending/movie/{time_window}
+
+
+dan pas page nya atau baru ngunjungi web nya automatic me-request apinya,
+dan kita mengguanakan hook react yaitu useEffect

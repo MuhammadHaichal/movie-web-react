@@ -1,0 +1,17 @@
+BASE URL PEOPLE LIST
+====================
+
+Get a list of people ordered by popularity.
+
+base url = https://api.themoviedb.org/3/person/popular?language=en-US&page=1
+
+
+
+
+DETAIL PEOPLE LIST
+==================
+
+Query the top level details of a person
+
+
+base url = https://api.themoviedb.org/3/person/person_id?language=en-US

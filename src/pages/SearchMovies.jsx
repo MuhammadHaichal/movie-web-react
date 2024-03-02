@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import axios from "axios";
 
 import "swiper/css";
 
@@ -16,6 +15,9 @@ import Image from "react-bootstrap/Image";
 
 import Navbars from "../components/Navbar.jsx";
 
+import detailMovieApi from "../api/detailMovie.js";
+import searchFormApi from "../api/searchForm.js";
+
 const SearchMovies = () => {
   const [keywordMovie, setKeywordMovie] = useState("");
   const [movies, setMovies] = useState([]);
@@ -25,39 +27,17 @@ const SearchMovies = () => {
   async function HandleSubmit(e) {
     e.preventDefault();
 
-    const request = await axios.get(
-      `${process.env.baseURL}/search/movie?query=${keywordMovie}&include_adult=false&language=en-US&page=1`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.accessToken}`,
-          accept: "application/json",
-        },
-      },
-    );
+    const request = await searchFormApi(keywordMovie);
+    const response = request;
 
-    let response = request.data.results;
-
-    if (response.length == 0) {
-      console.log("film tidak ditemukan");
-    } else {
-      setMovies(response);
-    }
+    setMovies(response);
   }
 
   // function buat detail  movie
-
   async function HandleClick(id) {
-    const request = await axios.get(
-      `${process.env.baseURL}/movie/${id}?language=en-US`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.accessToken}`,
-          accept: "application/json",
-        },
-      },
-    );
+    const request = await detailMovieApi(id);
+    const response = request;
 
-    const response = request.data;
     setDetail(response);
   }
 
