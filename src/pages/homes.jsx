@@ -1,278 +1,172 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useState, useEffect } from "react"
 
-import "swiper/css";
+import Container from "react-bootstrap/Container"
 
-import Container from "react-bootstrap/Container";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Stack from "react-bootstrap/Stack";
-import Modal from "react-bootstrap/Modal";
-import Image from "react-bootstrap/Image";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+import Navbars from "../components/Navbar.jsx"
+// import Footer from "../components/footer.jsx"
+import DropDownCategory from "../components/dropdownCategory.jsx"
+import CardTrending from "../components/cardTrending.jsx"
+import CardMovies from "../components/cardMovies.jsx"
+import CardTv from "../components/cardTv.jsx"
 
-import Navbars from "../components/Navbar.jsx";
-
-import trendingApi from "../api/trendingApi.js";
-
-
-
+import trendingApi from "../services/api/trendingApi.js"
+import moviesApi from "../services/api/moviesApi.js"
+import tvApi from "../services/api/tvApi.js"
 
 const Homes = () => {
-  const [categoryTren, setCategoryTren] = useState("all");
-  const [trending, setTrending] = useState([]);
+    const [categoryTren, setCategoryTren] = useState("All")
+    const [categoryMovie, setCategoryMovie] = useState("Top Rating")
+    const [categoryTv, setCategoryTv] = useState("Top Rating")
 
-  const [categoryMovie, setCategoryMovie] = useState("top_rated")
-  const [movies, setMovies] = useState([])
+    const [trendings, setTrendings] = useState([])
+    const [movies, setMovies] = useState([])
+    const [tvs, setTvs] = useState([])
 
+    // function trending
+    async function HandlerTrending(category, categoryBtn) {
+        const response = await trendingApi(category)
+        setCategoryTren(categoryBtn)
+        setTrendings(response)
+    }
 
-  async function HandlerTrending(category, categoryBtn) {
-    const response = await trendingApi(category);
-    setCategoryTren(categoryBtn);
+    // function movie list
+    async function HandlerMovie(category, categoryBtn) {
+        const response = await moviesApi(category)
+        setCategoryMovie(categoryBtn)
+        setMovies(response)
+    }
 
-    setTrending(response);
-  }
-  
-  async function HandlerMovie(category, categoryBtn) {
-  	// const response = await movieApi(category)
-  	setCategoryMovie(categoryBtn)
-  	
-  	// setMovies(response)
-  }
+    // function tv list
+    async function HandlerTv(category, categoryBtn) {
+        const response = await tvApi(category)
+        setCategoryTv(categoryBtn)
+        setTvs(response)
+    }
 
+    useEffect(() => {
+        HandlerTrending("all")
+        HandlerMovie("top_rated")
+        HandlerTv("top_rated")
+    }, [])
 
- 
- 
-  useEffect(() => {
-   HandlerTrending(categoryTren);
-   HandlerMovie(categoryMovie)
-  }, []);
+    return (
+        <>
+            {/* navbar start */}
+            <Navbars />
 
-  return (
-    <>
-      {/* navbar start */}
-      <header>
-        <Navbars />
-      </header>
-      {/* navbar end */}
+            {/* pembukaan website start */}
+            <section className="hero-bg ">
+                <Container>
+                    <div className=" py-5">
+                        <h1
+                            className="text-left text-light"
+                            style={{ fontsize: "2.3em" }}
+                        >
+                            Selamat Datang
+                        </h1>
+                        <p className="text-white">
+                            Millions of movies, TV shows and people to discover.
+                            Explore now.
+                        </p>
+                    </div>
+                </Container>
+            </section>
+            
 
-      {/* pembukaan website start */}
-      <section className="hero-bg ">
-        <Container>
-          <div className=" py-5">
-            <h1 className="text-left text-light" style={{ fontsize: "2.3em" }}>
-              Selamat Datang
-            </h1>
-            <p className="text-white">
-              Millions of movies, TV shows and people to discover. Explore now.
-            </p>
-          </div>
-        </Container>
-      </section>
-      {/* pembukaan website end */}
+            {/* trending movies start */}
+            <section className="mt-5">
+                <Container fluid>
+                    <div>
+                        <DropDownCategory
+                            title="Trending"
+                            subtitle="Temukan Film Menarik"
+                            handler={HandlerTrending}
+                            buttonName={categoryTren}
+                            category={[
+                                { id: 1, keys: "all", title: "All" },
+                                {
+                                    id: 2,
+                                    keys: "movie",
+                                    title: "Movies",
+                                },
 
-      {/* trending movies start */}
-      <section className="mt-5">
-        <Container fluid>
-          <div>
-            <Row
-              direction="horizontal"
-              className="justify-content-start  align-items-center"
-            >
-              <Col xs={3} sm={2}>
-                <h1 className="text-left">Trending</h1>
-              </Col>
-              <Col xs={2}>
-                <Dropdown>
-                  <Dropdown.Toggle
-                    variant="warning"
-                    id="dropdown-basic"
-                    className="px-4"
-                  >
-                    {categoryTren}
-                  </Dropdown.Toggle>
+                                { id: 3, keys: "tv", title: "TV" },
+                            ]}
+                        />
+                    </div>
+                    <CardTrending data={trendings} />
+                </Container>
+            </section>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Button
-                        variant="warning"
-                        onClick={(e) => HandlerTrending("all", "All")}
-                      >
-                        All
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        variant="warning"
-                        onClick={(e) => HandlerTrending("movie", "Movies")}
-                      >
-                        Movies
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        variant="warning"
-                        onClick={(e) => HandlerTrending("person", "People")}
-                      >
-                        People
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        variant="warning"
-                        onClick={(e) => HandlerTrending("tv", "TV")}
-                      >
-                        TV
-                      </Button>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Col>
-            </Row>
-          </div>
+            {/* movies start */}
+            <section className="mt-5">
+                <Container fluid>
+                    <div>
+                        <DropDownCategory
+                            title="Movies"
+                            subtitle="Temukan Film Menarik dan menghibur"
+                            handler={HandlerMovie}
+                            buttonName={categoryMovie}
+                            category={[
+                                {
+                                    id: 1,
+                                    keys: "top_rated",
+                                    title: "Top Rating",
+                                },
+                                {
+                                    id: 2,
+                                    keys: "popular",
+                                    title: "Popular",
+                                },
+                                {
+                                    id: 3,
+                                    keys: "upcoming",
+                                    title: "Upcoming",
+                                },
 
-          {/* cards trending start */}
-          <div className="mt-4">
-            <Container fluid={true}>
-              <Swiper
-                slidesPerView={1}
-                spaceBetween={10}
-                breakpoints={{
-                  320: {
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                  },
+                                {
+                                    id: 4,
+                                    keys: "now_playing",
+                                    title: "Now Playing",
+                                },
+                            ]}
+                        />
+                    </div>
 
-                  480: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                  },
+                    <CardMovies data={movies} />
+                </Container>
+            </section>
 
-                  640: {
-                    slidesPerView: 3,
-                    spaceBetween: 40,
-                  },
-                }}
-              >
-                {trending.map((tren) => (
-                  <SwiperSlide key={tren.id}>
-                    <Card style={{ width: "19rem" }}>
-                      <Container className="p-2">
-                        <Row>
-                          <Col xs={5} sm={5}>
-                            <Card.Img
-                              variant="top"
-                              src={`${process.env.imageURL}${tren.poster_path ? tren.poster_path : tren.profile_path}`}
-                            />
-                          </Col>
-                          <Col>
-                            <Card.Body>
-                              <Card.Title>
-                                {tren.original_title
-                                  ? tren.original_title
-                                  : tren.original_name}
-                              </Card.Title>
-                              <Card.Text>
-                                {tren.release_date
-                                  ? tren.release_date
-                                  : tren.first_air_date}
-                              </Card.Text>
+            {/* tv start */}
+            <section className="mt-5">
+                <Container fluid>
+                    <div>
+                        <DropDownCategory
+                            title="Tv"
+                            subtitle="Acara menarik dan hiburan bersama keluarga"
+                            handler={HandlerTv}
+                            buttonName={categoryTv}
+                            category={[
+                                {
+                                    id: 1,
+                                    keys: "top_rated",
+                                    title: "Top Rating",
+                                },
+                                {
+                                    id: 2,
+                                    keys: "popular",
+                                    title: "Popular",
+                                },
+                            ]}
+                        />
+                    </div>
 
-                              {/* buat person */}
-                              <Card.Text>
-                                {tren.known_for_department &&
-                                  tren.known_for_department}
-                              </Card.Text>
-                              <Button variant="primary">Detail</Button>
-                            </Card.Body>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </Card>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </Container>
-          </div>
-          {/* cards trending end */}
-        </Container>
-      </section>
-      {/* trending movies end */}
-      
-      
-      
-      
-      {/* movies start */}
-      <section className="mt-5">
-    	<Container fluid>
-    		<div>
-    			<Row
-	              direction="horizontal"
-	              className="justify-content-start  align-items-center"
-	            >
-	              <Col xs={3} sm={2}>
-	                <h1 className="text-left">Movies</h1>
-	              </Col>
-	              <Col xs={2}>
-	                <Dropdown>
-	                  <Dropdown.Toggle
-	                    variant="warning"
-	                    id="dropdown-basic"
-	                    className="px-4"
-	                  >
-	                    { categoryMovie}
-	                  </Dropdown.Toggle>
-	
-	                  <Dropdown.Menu>
-	                    <Dropdown.Item>
-	                      <Button
-	                        variant="warning"
-	                        onClick={(e) => HandlerMovie("top_rated", "Top Rating")}
-	                      >
-	                        Top Rating
-	                      </Button>
-	                    </Dropdown.Item>
-	                    <Dropdown.Item>
-	                      <Button
-	                        variant="warning"
-	                        onClick={(e) => HandlerMovie("popular", "Popular")}
-	                      >
-	                        Popular
-	                      </Button>
-	                    </Dropdown.Item>
-	                    <Dropdown.Item>
-	                      <Button
-	                        variant="warning"
-	                        onClick={(e) => HandlerMovie("upcoming", "Upcoming")}
-	                      >
-	                       Upcoming
-	                      </Button>
-	                    </Dropdown.Item>
-	                    <Dropdown.Item>
-	                      <Button
-	                        variant="warning"
-	                        onClick={(e) => HandlerMovie("now_playing", "Now Playing")}
-	                      >
-	                        Now Playing
-	                      </Button>
-	                    </Dropdown.Item>
-	                  </Dropdown.Menu>
-	                </Dropdown>
-	              </Col>
-	            </Row>
-    		</div>
-    		
-    		
-    		
-    	</Container>
-      </section>
-      {/* movies end */}
-    </>
-  );
-};
+                    <CardTv data={tvs} />
+                </Container>
+            </section>
+            {/* tv end  */}
+        </>
+    )
+}
 
-export default Homes;
+export default Homes

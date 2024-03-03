@@ -15,3 +15,10 @@ Query the top level details of a person
 
 
 base url = https://api.themoviedb.org/3/person/person_id?language=en-US
+
+
+SEARCH PEOPLE
+=============
+Search for people by their name and also known as names.
+
+https://api.themoviedb.org/3/search/person?query=haikal&include_adult=false&language=en-US

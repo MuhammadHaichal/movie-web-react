@@ -1,25 +1,25 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Haikal - Movie</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Haikal - Movie</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.jsx"></script>
 
-    <!-- eruda for development console -->
-    <script src="node_modules/eruda/eruda.js"></script>
-    <script>
-      let el = document.createElement("div");
-      document.body.appendChild(el);
+        <!-- eruda for development console -->
+        <script src="node_modules/eruda/eruda.js"></script>
+        <script>
+            let el = document.createElement("div")
+            document.body.appendChild(el)
 
-      eruda.init({
-        container: el,
-        tool: ["console", "elements", "network"],
-      });
-    </script>
-  </body>
+            eruda.init({
+                container: el,
+                tool: ["console", "elements", "network"],
+            })
+        </script>
+    </body>
 </html>
